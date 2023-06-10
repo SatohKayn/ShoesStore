@@ -3,6 +3,9 @@ package com.Store.ShoesStore.services;
 import com.Store.ShoesStore.enity.Product;
 import com.Store.ShoesStore.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,21 +14,29 @@ import java.util.Optional;
 @Service
 public class ProductService {
     @Autowired
-    private IProductRepository bookRepository;
+    private IProductRepository productRepository;
+    public Page<Product> getPaginatedProducts(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return productRepository.findAll(pageable);
+    }
+    public Page<Product> getProductByName(int page, int pageSize, String name) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return productRepository.findByNameContainingIgnoreCase(name, pageable);
+    }
     public List<Product> getAllBook(){
-        return bookRepository.findAll();
+        return productRepository.findAll();
     }
     public Product getBookById(Long id){
-        Optional<Product> optionalBook = bookRepository.findById(id);
+        Optional<Product> optionalBook = productRepository.findById(id);
         return optionalBook.orElse(null);
     }
-    public void addBook(Product newbook){
-        bookRepository.save(newbook);
+    public void addProduct(Product product){
+        productRepository.save(product);
     }
     public void updateBook(Product newbook){
-        bookRepository.save(newbook);
+        productRepository.save(newbook);
     }
     public void deleteBook(Long id){
-        bookRepository.deleteById(id);
+        productRepository.deleteById(id);
     }
 }

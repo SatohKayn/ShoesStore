@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
@@ -27,6 +28,12 @@ public class UserController {
     public String register(Model model) {
         model.addAttribute("user", new User());
         return "user/register";
+    }
+    @GetMapping("/user/{userId}")
+    public String userProfile(@PathVariable("userId") Long userId, Model model) {
+        User user = userService.getUserById(userId);
+        model.addAttribute("user", user);
+        return "user/profile";
     }
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("user") User user,

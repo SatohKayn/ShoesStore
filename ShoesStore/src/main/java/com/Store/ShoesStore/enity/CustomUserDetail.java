@@ -21,7 +21,7 @@ public class CustomUserDetail implements UserDetails {
         this.user = user;
         this.userRepository = userRepository;
     }
-
+    public Long getId(){return user.getId();}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

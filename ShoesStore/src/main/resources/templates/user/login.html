@@ -2,14 +2,9 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <th:block th:replace="~{layout :: link-css}"></th:block>
+  <th:block th:replace="layout :: head"></th:block>
 </head>
 <body>
-<th:block th:replace="~{layout :: header}"></th:block>
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-lg-6 col-md-8">
@@ -42,9 +37,9 @@
           </div>
         </fieldset>
       </form>
+      <a style="margin: 3em 0" href="/" class="btn btn-primary">Back to homepage</a>
     </div>
   </div>
 </div>
-<th:block th:replace="~{layout :: footer}"></th:block>
 </body>
 </html>

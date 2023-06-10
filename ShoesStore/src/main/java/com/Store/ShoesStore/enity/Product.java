@@ -10,11 +10,12 @@ import com.Store.ShoesStore.validator.annotation.ValidUserId;
 
 @Data
 @Entity
-@Table(name = "book")
+@Table(name = "Product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String name;
     private String description;
     private int currentQuantity;
     private String origin;
