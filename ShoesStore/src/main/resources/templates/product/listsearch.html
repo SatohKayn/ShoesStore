@@ -60,7 +60,7 @@
 							<div class="sidebar-box-2">
 								<h2 class="heading">Categories</h2>
 								<ul>
-									<li th:each="category : ${categories}" th:text="${category.name}"><a th:href="@{/products/view/category/{id}(id=${category.id})}"></a></li>
+									<li th:each="category : ${categories}" ><a th:href="@{/products/view/category/{id}(id=${category.id})}" th:text="${category.name}"></a></li>
 								</ul>
     						</div>
 					</div>

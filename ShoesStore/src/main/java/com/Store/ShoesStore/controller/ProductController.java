@@ -65,23 +65,21 @@ public class ProductController {
         return "product/listsearch";
     }
 
-    /*@GetMapping("/view/category/{id}")
+    @GetMapping("/view/category/{id}")
     public String viewByCategory(@PathVariable("id") Long id, Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
+        Category category = categoryService.getCategoryById(id);
         int pageSize = 10; // Number of products per page
-        Page<Product> productPage = productService.getPaginatedProducts(page, pageSize);
-        List<Product> products = productPage.getContent()
-                .stream()
-                .filter(p -> p.getCategory().getId() == (id))
-                .collect(Collectors.toList());
-
+        Page<Product> productPage = productService.getProductByCategory(page, pageSize, category);
+        List<Product> products = productPage.getContent();
+        model.addAttribute("category", category);
         model.addAttribute("Products", products);
         model.addAttribute("categories", categoryService.getAllCategory());
 
         int totalPages = productPage.getTotalPages();
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", page);
-        return "product/shop";
-    }*/
+        return "product/listcate";
+    }
 
 
     @GetMapping("/add")

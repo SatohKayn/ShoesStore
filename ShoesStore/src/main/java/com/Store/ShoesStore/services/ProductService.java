@@ -1,5 +1,6 @@
 package com.Store.ShoesStore.services;
 
+import com.Store.ShoesStore.enity.Category;
 import com.Store.ShoesStore.enity.Product;
 import com.Store.ShoesStore.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class ProductService {
     public Page<Product> getProductByName(int page, int pageSize, String name) {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         return productRepository.findByNameContainingIgnoreCase(name, pageable);
+    }
+    public Page<Product> getProductByCategory(int page, int pageSize, Category category) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return productRepository.findByCategory(category, pageable);
     }
     public List<Product> getAllBook(){
         return productRepository.findAll();

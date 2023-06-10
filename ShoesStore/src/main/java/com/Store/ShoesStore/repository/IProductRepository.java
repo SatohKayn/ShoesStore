@@ -1,5 +1,6 @@
 package com.Store.ShoesStore.repository;
 
+import com.Store.ShoesStore.enity.Category;
 import com.Store.ShoesStore.enity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,4 +12,5 @@ import java.util.List;
 @Repository
 public interface IProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByNameContainingIgnoreCase(String name, Pageable pageable);
+    Page<Product> findByCategory(Category category, Pageable pageable);
 }
