@@ -34,10 +34,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers( "/css/**", "/js/**", "/", "/register", "/error", "/images/**", "/scss/**", "/fonts/**")
+                        .requestMatchers( "/css/**", "/js/**", "/", "/register", "/error", "/images/**", "/scss/**", "/fonts/**", "/vendor/**")
                         .permitAll()
                         .requestMatchers("/products/**")
                         .hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/admin/**")
+                        .hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
 
                 )

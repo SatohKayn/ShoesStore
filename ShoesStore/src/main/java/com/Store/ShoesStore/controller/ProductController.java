@@ -28,7 +28,7 @@ public class ProductController {
     private CategoryService categoryService;
     @GetMapping("/view")
     public String listProduct(@RequestParam(value = "page", defaultValue = "1") int page, Model model){
-        int pageSize = 10; // Number of products per page
+        int pageSize = 9; // Number of products per page
         Page<Product> productPage = productService.getPaginatedProducts(page, pageSize);
         List<Product> products = productPage.getContent();
 
@@ -53,7 +53,7 @@ public class ProductController {
     public String searchProducts(@RequestParam(value = "page", defaultValue = "1") int page,
                                  @RequestParam("q") String query,
                                  Model model) {
-        int pageSize = 10;
+        int pageSize = 9;
         Page<Product> productPage = productService.getProductByName(page, pageSize, query);
         List<Product> products = productPage.getContent();
         model.addAttribute("Products", products);
@@ -68,7 +68,7 @@ public class ProductController {
     @GetMapping("/view/category/{id}")
     public String viewByCategory(@PathVariable("id") Long id, Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
         Category category = categoryService.getCategoryById(id);
-        int pageSize = 10; // Number of products per page
+        int pageSize = 9; // Number of products per page
         Page<Product> productPage = productService.getProductByCategory(page, pageSize, category);
         List<Product> products = productPage.getContent();
         model.addAttribute("category", category);
@@ -117,47 +117,5 @@ public class ProductController {
         model.addAttribute("book", new Product());
         model.addAttribute("categories", categoryService.getAllCategory());
         return "redirect:/products/view";
-    }
-    /*@PostMapping("/add")
-    public String addBook(@Valid @ModelAttribute("book") Product Product, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("categories", categoryService.getAllCategory());
-            return "Product/add";
-        }
-
-        productService.addBook(Product);
-        return "redirect:/books";
-    }*/
-
-    @GetMapping("/edit/{id}")
-    public String editBookForm(@PathVariable("id") long id, Model model){
-        Product editProduct = productService.getBookById(id);
-        if(editProduct != null){
-            model.addAttribute("book", editProduct);
-            model.addAttribute("categories", categoryService.getAllCategory());
-            return "Product/edit";
-        }else {
-            return "error/404";
-        }
-    }
-    @PostMapping("/edit")
-    public String editBook(@Valid @ModelAttribute("book") Product updateProduct, BindingResult bindingResult, Model model ){
-        if (bindingResult.hasErrors()){
-            model.addAttribute("categories", categoryService.getAllCategory());
-            return "Product/edit";
-        }
-        productService.getAllBook().stream()
-                .filter(book -> book.getId() == updateProduct.getId())
-                .findFirst()
-                .ifPresent(book -> {
-
-                    productService.updateBook(updateProduct);
-                });
-        return "redirect:/books";
-    }
-    @PostMapping("/delete/{id}")
-    public String deleteBook(@PathVariable("id") long id){
-        productService.deleteBook(id);
-        return "redirect:/books";
     }
 }

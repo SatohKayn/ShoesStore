@@ -23,6 +23,13 @@ public class Product {
     private double salePrice;
     private String image;
     private boolean is_activated;
+    public boolean isIs_activated() {
+        return is_activated;
+    }
+
+    public void setIs_activated(boolean is_activated) {
+        this.is_activated = is_activated;
+    }
     @ManyToOne
     @JoinColumn(name = "category_id")
     @ValidCategoryId
