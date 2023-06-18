@@ -8,7 +8,6 @@ import com.Store.ShoesStore.services.ProductService;
 import com.Store.ShoesStore.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,7 +42,7 @@ public class AdminController {
 
     @GetMapping("/products/table")
     public String listProduct(Model model){
-        List<Product> products = productService.getAllBook();
+        List<Product> products = productService.getALlProduct();
 
         model.addAttribute("Products", products);
         model.addAttribute("categories", categoryService.getAllCategory());
@@ -80,7 +79,7 @@ public class AdminController {
     }
     @GetMapping("/products/table/edit/{id}")
     public String editProductForm(@PathVariable("id") long id, Model model){
-        Product editProduct = productService.getBookById(id);
+        Product editProduct = productService.getProductById(id);
         if(editProduct != null){
             model.addAttribute("product", editProduct);
             model.addAttribute("categories", categoryService.getAllCategory());
@@ -109,17 +108,17 @@ public class AdminController {
                 throw new RuntimeException("Failed to upload the file: " + e.getMessage());
             }
         }
-        productService.getAllBook().stream()
+        productService.getALlProduct().stream()
                 .filter(book -> book.getId() == updateProduct.getId())
                 .findFirst()
                 .ifPresent(book -> {
-                    productService.updateBook(updateProduct);
+                    productService.updateProduct(updateProduct);
                 });
         return "redirect:/admin/products/table";
     }
     @PostMapping("/products/table/delete/{id}")
     public String deleteProduct(@PathVariable("id") long id){
-        productService.deleteBook(id);
+        productService.deleteProduct(id);
         return "redirect:/admin/products/table";
     }
     @GetMapping("/category/table")

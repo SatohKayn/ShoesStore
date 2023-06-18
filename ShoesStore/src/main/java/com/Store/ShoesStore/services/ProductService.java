@@ -28,20 +28,20 @@ public class ProductService {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         return productRepository.findByCategory(category, pageable);
     }
-    public List<Product> getAllBook(){
+    public List<Product> getALlProduct(){
         return productRepository.findAll();
     }
-    public Product getBookById(Long id){
+    public Product getProductById(Long id){
         Optional<Product> optionalBook = productRepository.findById(id);
         return optionalBook.orElse(null);
     }
     public void addProduct(Product product){
         productRepository.save(product);
     }
-    public void updateBook(Product newbook){
-        productRepository.save(newbook);
+    public void updateProduct(Product newProduct){
+        productRepository.save(newProduct);
     }
-    public void deleteBook(Long id){
+    public void deleteProduct(Long id){
         productRepository.deleteById(id);
     }
 }

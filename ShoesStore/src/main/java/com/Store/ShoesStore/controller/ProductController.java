@@ -4,20 +4,14 @@ import com.Store.ShoesStore.enity.Category;
 import com.Store.ShoesStore.enity.Product;
 import com.Store.ShoesStore.services.ProductService;
 import com.Store.ShoesStore.services.CategoryService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/products")
@@ -43,7 +37,7 @@ public class ProductController {
     }
     @GetMapping("/view/{id}")
     public String singleProduct(@PathVariable("id") long id, Model model){
-        Product product = productService.getBookById(id);
+        Product product = productService.getProductById(id);
         if(product == null)
             return "error/404";
         model.addAttribute("product", product);

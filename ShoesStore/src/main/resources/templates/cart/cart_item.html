@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="layout :: head"></th:block>
+</head>
+  <body class="goto-here">
+  <th:block th:replace="layout :: header"></th:block>
+
+    <section class="ftco-section ftco-cart">
+			<div class="container">
+				<div class="row">
+    			<div class="col-md-12 ftco-animate">
+    				<div class="cart-list">
+	    				<table class="table">
+						    <thead class="thead-primary">
+						      <tr class="text-center">
+						        <th>&nbsp;</th>
+						        <th>&nbsp;</th>
+						        <th>Product</th>
+						        <th>Price</th>
+						        <th>Quantity</th>
+						        <th>Total</th>
+						      </tr>
+						    </thead>
+							<tbody>
+							<tr class="text-center" th:each="cartItem : ${cartItems}" th:attr="data-product-id=${cartItem.product.id}">
+								<td class="product-remove">
+									<a href="#" th:attr="data-product-id=${cartItem.product.id}" onclick="removeCartItem(this.getAttribute('data-product-id'))"><span class="ion-ios-close"></span></a></td>
+								<td class="image-prod">
+									<div class="img" th:style="'background-image:url(' + '/images/' + ${cartItem.product.image} + ')'"></div>
+								</td>
+								<td class="product-name">
+									<h3 th:text="${cartItem.product.name}"></h3>
+									<p th:text="${cartItem.product.description}"></p>
+								</td>
+								<td class="price" th:text="${cartItem.product.costPrice}"></td>
+								<td class="quantity">
+									<div class="input-group mb-3">
+										<input type="number" name="quantity" class="quantity form-control input-number" th:value="${cartItem.quantity}" min="1" max="${cartItem.product.quantity}">
+									</div>
+								</td>
+								<td class="total" th:text="${cartItem.product.costPrice * cartItem.quantity}"></td>
+							</tr>
+							</tbody>
+						</table>
+					  </div>
+    			</div>
+    		</div>
+    		<div class="row justify-content-start">
+    			<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+    				<div class="cart-total mb-3">
+    					<h3>Cart Totals</h3>
+    					<p class="d-flex">
+    						<span>Subtotal</span>
+    						<span th:text="${cartTotal}" id="totalCost"></span>
+    					</p>
+    					<p class="d-flex">
+    						<span>Delivery</span>
+    						<span>$0.00</span>
+    					</p>
+    					<hr>
+    				</div>
+    				<p class="text-center"><a th:href="@{/cart/checkout}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+					<p class="text-center"><a href="#" class="btn btn-primary py-3 px-4" onclick="confirmClearCart()">Clear List</a></p>
+    			</div>
+    		</div>
+			</div>
+		</section>
+  <th:block th:replace="layout :: footer"></th:block>
+  <script>
+  var totalCostElement = document.getElementById("totalCost");
+   function confirmClearCart() {
+        event.preventDefault();
+
+        if (confirm('Are you sure you want to clear the cart?')) {
+            clearCart();
+        }
+    }
+  function clearCart() {
+  event.preventDefault();
+        $.ajax({
+            url: 'cart/clear',
+            type: 'POST',
+            success: function(response) {
+                alert('Cart cleared successfully');
+                window.location.href = '/cart';
+            },
+            error: function(error) {
+                // Handle error response
+                alert('Error clearing cart');
+            }
+        });
+    }
+		function removeCartItem(productId) {
+		event.preventDefault();
+			var id = Number(productId);
+			var url = '/cart/remove?productId=' + id;
+
+			$.ajax({
+				url: url,
+				type: 'POST',
+				success: function (response) {
+					// Remove the corresponding <tr> element
+					$('tr[data-product-id="' + id + '"]').remove();
+					// Update the total cost
+					updateTotalCost();
+				},
+				error: function (error) {
+					// Handle error response
+					alert('Error removing item from cart');
+				}
+			});
+		}
+
+		function updateTotalCost() {
+			// Calculate the new total cost
+			var totalCost = 0;
+			$('.total').each(function () {
+				totalCost += parseFloat($(this).text());
+			});
+			// Update the total cost display
+			totalCostElement.textContent = (totalCost.toFixed(2));
+		}
+	</script>
+
+  </body>
+</html>
