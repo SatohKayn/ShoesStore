@@ -67,7 +67,7 @@
 	          		<p style="color: #000;" th:text="${product.currentQuantity}" id="currentQuanity"></p>
 	          	</div>
           	</div>
-          	<p><a href="../cart/cart_item.html" class="btn btn-black py-3 px-5 mr-2">Add to Cart</a><a href="../cart/cart_item.html" class="btn btn-primary py-3 px-5">Buy now</a></p>
+          	<p><a href="#" class="btn btn-black py-3 px-5 mr-2" th:attr="data-product-id=${product.id}" onclick="addToCart(this.getAttribute('data-product-id'))">Add to Cart</a><a href="../cart/cart_item.html" class="btn btn-primary py-3 px-5">Buy now</a></p>
     			</div>
     		</div>
 		</div>
@@ -110,6 +110,30 @@
 		    });
 		    
 		});
+		function addToCart(productId) {
+    event.preventDefault();
+        var quantity = parseInt($('#quantity').val());
+
+        var url = '/cart/add';
+        var data = {
+            'productId': Number(productId),
+            'quantity': quantity
+        };
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                // Handle success response
+                alert('Item added to cart successfully');
+            },
+            error: function(error) {
+                // Handle error response
+                alert('Error adding item to cart');
+            }
+        });
+    }
 	</script>
 
   </body>

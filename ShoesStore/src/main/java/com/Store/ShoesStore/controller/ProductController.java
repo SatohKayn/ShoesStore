@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/products")
@@ -76,9 +78,9 @@ public class ProductController {
     }
 
 
-    @GetMapping("/add")
+    /*@GetMapping("/add")
     public String addBookForm(Model model){
-        /*Random random = new Random();
+        Random random = new Random();
 
         String[] namePro = {"Giày cao gót", "Dép Lào", "Ủng da", "Sneaker"};
         int[] quanity = {1,2,3,4,5};
@@ -100,16 +102,16 @@ public class ProductController {
             newProduct.setSalePrice(i * 100 + i * randomNumber * 9 - 100);
             randomNumber = random.nextInt(images.length);
             newProduct.setImage(images[randomNumber]);
-            newProduct.set_activated(true);
+            newProduct.setIs_activated(true);
             long randomCategoryId = allCategories.get(random.nextInt(allCategories.size())).getId();
             Optional<Category> foundCategory = allCategories.stream()
                     .filter(category -> category.getId() == randomCategoryId)
                     .findFirst();
             foundCategory.ifPresent(category -> newProduct.setCategory(category));
             productService.addProduct(newProduct);
-        }*/
+        }
         model.addAttribute("book", new Product());
         model.addAttribute("categories", categoryService.getAllCategory());
         return "redirect:/products/view";
-    }
+    }*/
 }

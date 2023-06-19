@@ -58,6 +58,10 @@
     						<span>Delivery</span>
     						<span>$0.00</span>
     					</p>
+						<p class="d-flex">
+							<span>Discount</span>
+							<span th:text="-${cartDiscount}"></span>
+						</p>
     					<hr>
     				</div>
     				<p class="text-center"><a th:href="@{/cart/checkout}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>

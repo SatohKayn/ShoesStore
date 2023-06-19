@@ -72,7 +72,7 @@ public class CartService {
 
         Order order = new Order();
         order.setUser(user);
-        order.setTotalPrice(cart.getTotal());
+        order.setTotalPrice(cart.getTotal() - cart.getDiscount());
 
         List<OrderItem> orderItems = new ArrayList<>();
         for (CartItem cartItem : cart.getItems()) {

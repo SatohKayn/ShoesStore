@@ -26,10 +26,13 @@
 		    						<div class="pricing">
 			    						<p class="price"><span th:text="${product.costPrice}"></span></p>
 			    					</div>
-			    					<p class="bottom-area d-flex px-3">
-		    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
-		    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
-		    						</p>
+									<p class="bottom-area d-flex px-3">
+										<a href="#" class="add-to-cart text-center py-2 mr-1" th:attr="data-product-id=${product.id}" onclick="addToCart(this.getAttribute('data-product-id'))">
+											<span>Add to cart <i class="ion-ios-add ml-1"></i></span>
+										</a>
+
+										<a th:href="@{/products/view/{id}(id=${product.id})}" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+									</p>
 		    					</div>
 		    				</div>
 		    			</div>
@@ -70,5 +73,31 @@
 		</div>
 	</section>
   <th:block th:replace="layout :: footer"></th:block>
+  <script>
+    function addToCart(productId) {
+    event.preventDefault();
+        var quantity = 1;
+
+        var url = '/cart/add';
+        var data = {
+            'productId': Number(productId),
+            'quantity': quantity
+        };
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                // Handle success response
+                alert('Item added to cart successfully');
+            },
+            error: function(error) {
+                // Handle error response
+                alert('Error adding item to cart');
+            }
+        });
+    }
+</script>
   </body>
 </html>

@@ -54,7 +54,7 @@
                             <a class="dropdown-item" th:href="checkout.html">Checkout</a>
                         </div>
                     </li>
-                    <li class="nav-item cta cta-colored"><a th:href="@{/cart}" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+                    <li class="nav-item cta cta-colored"><a th:href="@{/cart}" class="nav-link"><span class="icon-shopping_cart">[0]</span></a></li>
                     <li class="nav-item active" sec:authorize="!isAuthenticated()"><a th:href="@{/login}" class="nav-link">Login</a></li></li>
                     <li class="nav-item active" sec:authorize="!isAuthenticated()"><a th:href="@{/register}" class="nav-link">Register</a></li></li>
                     <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
@@ -157,6 +157,9 @@
     <script th:src="@{/js/main.js}"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script>
+        var cartIcon = document.querySelector('.icon-shopping_cart');
+    </script>
 </footer>
 </body>
 </html>

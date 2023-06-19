@@ -66,12 +66,13 @@ public class CartController {
         cartService.clearCart(user);
         return ResponseEntity.ok("Cart cleared successfully");
     }
-/*    @GetMapping("/checkout")
+    @GetMapping("/checkout")
     public String getOrder(Authentication authentication, Model model){
         CustomUserDetail userDetails = (CustomUserDetail) authentication.getPrincipal();
         User user = userService.getUserById(userDetails.getId());
         Cart cart = cartService.getCartByUser(user);
         model.addAttribute("cartTotal", cart.getTotal());
+        model.addAttribute("cartDiscount", cart.getDiscount());
         return "cart/checkout";
     }
     @PostMapping("/checkout")
@@ -80,5 +81,5 @@ public class CartController {
         User user = userService.getUserById(userDetails.getId());
         cartService.checkout(user);
         return ResponseEntity.ok("Checkout completed successfully");
-    }*/
+    }
 }

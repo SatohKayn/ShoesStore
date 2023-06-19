@@ -35,9 +35,6 @@ public class UserService {
             Cart cart = new Cart();
             cart.setUser(user);
             cartRepository.save(cart);
-
-            user.setCart(cart);
-            userRepository.save(user);
         }
     }
     public User getUserById(Long userId) {
